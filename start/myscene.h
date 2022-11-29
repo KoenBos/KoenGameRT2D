@@ -8,12 +8,15 @@
 
 #ifndef MYSCENE_H
 #define MYSCENE_H
+#define PI 3.14159265358979323846
 
 #include <rt2d/scene.h>
 
-#include "myentity.h"
+#include "player.h"
+#include "enemy.h"
+#include "projectile.h"
 
-/// @brief The MyScene class is the Scene implementation.
+ /// @brief The MyScene class is the Scene implementation.
 class MyScene : public Scene
 {
 public:
@@ -27,11 +30,16 @@ public:
 	/// @return void
 	virtual void update(float deltaTime);
 
+	std::vector<Projectile*> projectiles;
+
 private:
 	/// @brief the rotating square in the middle of the screen
-	MyEntity* myentity;
+	Player* player;
+	Enemy* enemy;
+	Projectile* projectile;
 	/// @brief a Timer to rotate the color every n seconds
 	Timer t;
+	bool power = false;
 };
 
 #endif /* SCENE00_H */
