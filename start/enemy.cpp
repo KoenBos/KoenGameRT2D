@@ -5,12 +5,15 @@
  */
 
 #include "enemy.h"
+#include "collider.h"
 
-Enemy::Enemy() : Entity()
+Enemy::Enemy(Player* player) : Entity()
 {
-	this->addSprite("assets/square.tga");
+	this->addSprite("assets/enemy.tga");
 	this->sprite()->color = WHITE;
-	this->scale = Point2(0.8, 0.8);
+	this->scale = Point2(1, 1);
+	_player = player;
+	
 }
 
 Enemy::~Enemy()
@@ -36,6 +39,16 @@ void Enemy::update(float deltaTime)
 	speed = 100 * deltaTime;
 	currentRotation = this->rotation.z * 180 / PI;
 	currentRotation = fmod(currentRotation, 180);
+
+	this->position.x += (cos(0.017453277777 * currentRotation)) * (speed / 3);
+	this->position.y += (sin(0.017453277777 * currentRotation)) * (speed / 3);
+
+
+	float playerangle = atan2(_player->position.y - this->position.y, _player->position.x - this->position.x) * 180.0 / PI;
+	this->rotation.z = playerangle * PI / 180;
+
+	//Rectangle hitbox = Rectangle(this->position.x, this->position.y, 100, 100);
+
 
 
 

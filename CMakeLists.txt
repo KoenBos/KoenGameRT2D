@@ -162,6 +162,8 @@ IF(MAKE_START)
 		start/enemy.h
 		start/projectile.cpp
 		start/projectile.h
+		start/basicentity.cpp
+		start/basicentity.h
 	)
 	target_link_libraries(start
 		${ALL_GRAPHICS_LIBS}

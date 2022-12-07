@@ -3,13 +3,14 @@
 #define ENEMY_H
 
 #include <rt2d/entity.h>
+#include "player.h"
 
  /// @brief The MyEntity class is the Entity implementation.
 class Enemy : public Entity
 {
 public:
 	/// @brief Constructor
-	Enemy();
+	Enemy(Player* player);
 	/// @brief Destructor
 	virtual ~Enemy();
 	float speed;
@@ -22,6 +23,8 @@ public:
 
 private:
 	/* add your private declarations */
+
+	Player* _player;
 };
 
 #endif /* MYENTITY_H */

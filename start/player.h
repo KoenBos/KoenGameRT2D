@@ -13,7 +13,6 @@ public:
 	/// @brief Destructor
 	virtual ~Player();
 	float speed;
-	float currentRotation;
 
 	/// @brief update is automatically called every frame
 	/// @param deltaTime the elapsed time in seconds
@@ -22,6 +21,7 @@ public:
 
 private:
 	/* add your private declarations */
+	float currentRotation;
 };
 
 #endif /* MYENTITY_H */

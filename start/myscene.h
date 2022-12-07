@@ -31,6 +31,10 @@ public:
 	virtual void update(float deltaTime);
 
 	std::vector<Projectile*> projectiles;
+	std::vector<Enemy*> enemys;
+	float deltaY;
+	float deltaX;
+	float angle;
 
 private:
 	/// @brief the rotating square in the middle of the screen

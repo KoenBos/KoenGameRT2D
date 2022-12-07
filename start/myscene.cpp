@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include "myscene.h"
+#include "collider.h"
 
 
 MyScene::MyScene() : Scene()
@@ -18,17 +19,12 @@ MyScene::MyScene() : Scene()
 	// the Sprite is added in Constructor of MyEntity.
 	player = new Player();
 	player->position = Point2(SWIDTH / 2, SHEIGHT / 2);
-
-	enemy = new Enemy();
-	enemy->position = Point2(SWIDTH / 2, SHEIGHT / 2);
-
-
+	
 
 
 	// create the scene 'tree'
 	// add myentity to this Scene as a child.
 	this->addChild(player);
-	this->addChild(enemy);
 	
 }
 
@@ -70,20 +66,33 @@ void MyScene::update(float deltaTime)
 		projectile->position = player->position;
 		projectile->rotation.z = player->rotation.z;
 	}
+	if (input()->getKey(KeyCode::LeftShift)) {power = true;}else{power = false;}
 
-	if (input()->getKey(KeyCode::LeftShift)) {
-		power = true;
+	if (input()->getKeyDown(KeyCode::E)) {
+		enemy = new Enemy(player);
+		this->addChild(enemy);
+		enemys.push_back(enemy);
+		enemy->position = Point2(SWIDTH / 2, SHEIGHT / 2);
 	}
-	else {
-		power = false;
-	}
-	for (int i = 0; i < projectiles.size(); i++)
+
+	// create shapes ('colliders')
+
+	//for (int i = 0; i < projectiles.size(); i++)
+	//{
+	//	if (projectiles[i]->position.x > SWIDTH || projectiles[i]->position.x < 0 || projectiles[i]->position.y < 0 || projectiles[i]->position.y > SHEIGHT) {
+	//		this->removeChild(projectiles[i]);
+	//		delete projectiles[i];
+	//		projectiles.erase(projectiles.begin() + i);
+	//		std::cout << "delete" << std::endl;
+	//	}
+	//}
+	for (int i = projectiles.size()-1; i >= 0; i--)
 	{
 		if (projectiles[i]->position.x > SWIDTH || projectiles[i]->position.x < 0 || projectiles[i]->position.y < 0 || projectiles[i]->position.y > SHEIGHT) {
 			this->removeChild(projectiles[i]);
 			delete projectiles[i];
 			projectiles.erase(projectiles.begin() + i);
-			std::cout << "delete" << std::endl;
+			std::cout << "deleteie" << std::endl;
 		}
 	}
 	
@@ -96,22 +105,80 @@ void MyScene::update(float deltaTime)
 
 	//player->rotation.z = angle - angle * 2;
 	//It's just
-	float angle = atan2(mouse.y - player->position.y, mouse.x - player->position.x) *180.0 / PI;
+
+	///////////////////////////////////////////////////////////deltaY = mouse.y - player->position.y;
+	///////////////////////////////////////////////////////////deltaX = mouse.x - player->position.x;
+
+	/////////////////////////////////////////////////////////////angle = atan2(mouse.y - player->position.y, mouse.x - player->position.x) * 180 / PI;
+
+	//if (deltaY < 0 && deltaX < 0) {
+	//	angle = -atan2(deltaY, deltaX)- PI;// *180.0 / PI;
+	//}
+	//else
+	//{
+	//	angle = atan2(deltaY, deltaX);
+	//}
+
+	///////////////////////////////////////////////////////////player->rotation.z = angle * PI / 180;
 
 	//float angleDifference = fmod(angle - player->currentRotation + 1800, 720) - 360;
+	
+	// Calculate the angle between the tank and the mouse cursor
+	float mouseX = mouse.x;
+	float mouseY = mouse.y;
+	float tankX = player->position.x;
+	float tankY = player->position.y;
+	float targetAngle = atan2(mouseY - tankY, mouseX - tankX);
+
+	// If the x-coordinate of the mouse cursor is negative, add 2 to the target angle
+	if (mouseX < 0) {
+		targetAngle += 2 * PI;
+	}
+
+	// Calculate the difference between the current rotation and the target angle
+	float currentRotation = player->rotation.z;
+	float rotationDifference = targetAngle - currentRotation;
+
+	// Clamp the rotation difference to a maximum value
+	float maxRotationDifference = 1 * deltaTime; // you can adjust this value to control the speed of rotation
+	float rotationDiff = std::max(-maxRotationDifference, std::min(rotationDifference, maxRotationDifference));
+
+	//Copyright 2022 JARNO Dijk en Joas heeft toegekeken.
+	if (currentRotation > 0.25 * PI && rotationDifference < -PI)
+	{
+		rotationDiff = maxRotationDifference;
+	}
+	if (currentRotation < -0.25 * PI && rotationDifference > PI)
+	{
+		rotationDiff = -maxRotationDifference;
+	}
+
+	// Set the new rotation of the tank based on the difference between the current and target angles
+	player->rotation.z = (currentRotation + rotationDiff);
+	if (currentRotation > PI)
+	{
+		player->rotation.z = -3.14;
+	}
+	if (currentRotation < -PI)
+	{
+		player->rotation.z = 3.14;
+	}
+	//End of copyright JARNO Dijk en Joas die heeft toegekeken.
+
+	
 
 
-	player->rotation.z = angle * PI/180;
 
-	//if (angleDifference < 0) {
+
+	//if (angle < player->rotation.z) {
 	//	player->rotation.z -= 0.001;
 	//}
-	//else if(angleDifference > 0){
+	//else if(angle > player->rotation.z){
 	//	player->rotation.z += 0.001;
 	//}
 
 
-	//std::cout <<  << std::endl;
+	std::cout << player->rotation.z << std::endl;
 	
 
 	// ############-- Draw border and lazer --##################std::cout << angleDifference << std::endl;

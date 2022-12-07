@@ -12,12 +12,14 @@ Projectile::Projectile() : Entity()
 	this->addSprite("assets/bullet.tga");
 	this->sprite()->color = WHITE;
 	this->scale = Point2(2, 2);
+	
 }
 
 Projectile::~Projectile()
 {
 
 }
+
 
 
 void Projectile::update(float deltaTime)
@@ -34,12 +36,14 @@ void Projectile::update(float deltaTime)
 	// ###############################################################
 	// WS moves myentity
 	// ###############################################################
-	speed = 600 * deltaTime;
+	speed = 1000 * deltaTime;
 	currentRotation = this->rotation.z * 180 / PI;
 	currentRotation = fmod(currentRotation, 180);
 
-	this->position.x += (cos(0.017453277777 * currentRotation)) * speed;
-	this->position.y += (sin(0.017453277777 * currentRotation)) * speed;
+
+	this->position += Point2(1000, 1000) * Point2(cos(this->rotation.z), sin(this->rotation.z)) * deltaTime;
+
+
 
 
 

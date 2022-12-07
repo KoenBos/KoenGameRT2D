@@ -34,8 +34,8 @@ void Player::update(float deltaTime)
 	// WS moves myentity
 	// ###############################################################
 	speed = 100 * deltaTime;
-	currentRotation = this->rotation.z * 180 / PI;
-	currentRotation = fmod(currentRotation, 180);
+	//currentRotation = this->rotation.z * 180 / PI;
+	//currentRotation = fmod(currentRotation, 180);
 
 
 
@@ -43,20 +43,22 @@ void Player::update(float deltaTime)
 
 	if (input()->getKey(KeyCode::W)) {
 		//this->position -= Point3(0, speed, 0);
-		this->position.x += (cos(0.017453277777 * currentRotation)) * speed;
-		this->position.y += (sin(0.017453277777 * currentRotation)) * speed;
+		this->position += Point2(50, 50) * Point2(cos(this->rotation.z), sin(this->rotation.z)) * deltaTime;
+		/*this->position.x += (cos(0.017453277777 * currentRotation)) * speed;
+		this->position.y += (sin(0.017453277777 * currentRotation)) * speed;*/
 	}
 	if (input()->getKey(KeyCode::S)) {
 		//this->position += Point3(0, speed, 0);
-		this->position.x += (cos(0.017453277777 * currentRotation)) * (speed * -1);
-		this->position.y += (sin(0.017453277777 * currentRotation)) * (speed * -1);
+		this->position -= Point2(50, 50) * Point2(cos(this->rotation.z), sin(this->rotation.z)) * deltaTime;
+		/*this->position.x += (cos(0.017453277777 * currentRotation)) * (speed * -1);
+		this->position.y += (sin(0.017453277777 * currentRotation)) * (speed * -1);*/
 	}
-	if (input()->getKey(KeyCode::A)) {
-		this->rotation.z += 1 * deltaTime;
-	}
-	if (input()->getKey(KeyCode::D)) {
-		this->rotation.z -= 1 * deltaTime;
-	}
+	//if (input()->getKey(KeyCode::A)) {
+	//	this->rotation.z += 1 * deltaTime;
+	//}
+	//if (input()->getKey(KeyCode::D)) {
+	//	this->rotation.z -= 1 * deltaTime;
+	//}
 
 
 

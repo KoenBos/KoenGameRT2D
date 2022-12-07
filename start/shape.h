@@ -1,19 +1,24 @@
+/**
+ * Copyright 2019 Rik Teerling <on@onandoffables.com>
+ *
+ * @file shape.h
+ *
+ * @brief description of Shape behavior.
+ */
 
-#ifndef PROJECTILE_H
-#define PROJECTILE_H
+#ifndef SHAPE_H
+#define SHAPE_H
 
 #include <rt2d/entity.h>
 
-/// @brief The MyEntity class is the Entity implementation.
-class Projectile : public Entity
+/// @brief The Shape class is the Entity implementation.
+class Shape : public Entity
 {
 public:
 	/// @brief Constructor
-	Projectile();
+	Shape();
 	/// @brief Destructor
-	virtual ~Projectile();
-	float speed;
-	float currentRotation;
+	virtual ~Shape();
 
 	/// @brief update is automatically called every frame
 	/// @param deltaTime the elapsed time in seconds
@@ -22,7 +27,6 @@ public:
 
 private:
 	/* add your private declarations */
-	Timer t;
 };
 
-#endif /* MYENTITY_H */
+#endif /* SHAPE_H */
