@@ -8,9 +8,14 @@
 
 Player::Player() : Entity()
 {
-	this->addSprite("assets/square2.tga");
+	this->addSprite("assets/tank.tga");
 	this->sprite()->color = WHITE;
-	this->scale = Point2(0.8,0.8);
+	this->scale = Point2(0.75,0.75);
+	dead = false;
+	health = 100;
+	speed = 100;
+
+	CurrentWave = 0;
 }
 
 Player::~Player()
@@ -33,7 +38,7 @@ void Player::update(float deltaTime)
 	// ###############################################################
 	// WS moves myentity
 	// ###############################################################
-	speed = 100 * deltaTime;
+	
 	//currentRotation = this->rotation.z * 180 / PI;
 	//currentRotation = fmod(currentRotation, 180);
 
@@ -42,16 +47,12 @@ void Player::update(float deltaTime)
 
 
 	if (input()->getKey(KeyCode::W)) {
-		//this->position -= Point3(0, speed, 0);
-		this->position += Point2(50, 50) * Point2(cos(this->rotation.z), sin(this->rotation.z)) * deltaTime;
-		/*this->position.x += (cos(0.017453277777 * currentRotation)) * speed;
-		this->position.y += (sin(0.017453277777 * currentRotation)) * speed;*/
+		this->position += Point2(speed, speed) * Point2(cos(this->rotation.z), sin(this->rotation.z)) * deltaTime;
+
 	}
 	if (input()->getKey(KeyCode::S)) {
-		//this->position += Point3(0, speed, 0);
-		this->position -= Point2(50, 50) * Point2(cos(this->rotation.z), sin(this->rotation.z)) * deltaTime;
-		/*this->position.x += (cos(0.017453277777 * currentRotation)) * (speed * -1);
-		this->position.y += (sin(0.017453277777 * currentRotation)) * (speed * -1);*/
+		this->position -= Point2(speed/1.5, speed/1.5) * Point2(cos(this->rotation.z), sin(this->rotation.z)) * deltaTime;
+
 	}
 	//if (input()->getKey(KeyCode::A)) {
 	//	this->rotation.z += 1 * deltaTime;

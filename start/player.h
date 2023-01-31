@@ -13,6 +13,9 @@ public:
 	/// @brief Destructor
 	virtual ~Player();
 	float speed;
+	int health;
+	bool dead;
+	float CurrentWave;
 
 	/// @brief update is automatically called every frame
 	/// @param deltaTime the elapsed time in seconds

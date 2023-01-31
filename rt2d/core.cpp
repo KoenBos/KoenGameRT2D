@@ -32,6 +32,7 @@ void Core::run(Scene* scene)
 	scene->updateScene((float)_deltaTime);
 
 	// Render Scene
+
 	_renderer.renderScene(scene);
 
 	// user clicked the 'close' button in the window

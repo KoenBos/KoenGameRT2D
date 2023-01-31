@@ -11,9 +11,14 @@ Enemy::Enemy(Player* player) : Entity()
 {
 	this->addSprite("assets/enemy.tga");
 	this->sprite()->color = WHITE;
-	this->scale = Point2(1, 1);
+	this->scale = Point2(0.75, 0.75);
 	_player = player;
-	
+	health = 3;
+	canBeHit = true;
+	lastHitTime = 0;
+	better = false;
+	speed = 40 + (player->CurrentWave);
+	speedup = false;
 }
 
 Enemy::~Enemy()
@@ -24,28 +29,22 @@ Enemy::~Enemy()
 
 void Enemy::update(float deltaTime)
 {
-	// ###############################################################
-	// Spacebar scales myentity
-	// ###############################################################
-	//if (input()->getKeyDown(KeyCode::Space)) {
-	//	this->scale = Point(0.5f, 0.5f);
-	//}
-	//if (input()->getKeyUp(KeyCode::Space)) {
-	//	this->scale = Point(1.0f, 1.0f);
-	//}
-	// ###############################################################
-	// WS moves myentity
-	// ###############################################################
-	speed = 100 * deltaTime;
-	currentRotation = this->rotation.z * 180 / PI;
-	currentRotation = fmod(currentRotation, 180);
-
-	this->position.x += (cos(0.017453277777 * currentRotation)) * (speed / 3);
-	this->position.y += (sin(0.017453277777 * currentRotation)) * (speed / 3);
+	if (better == true)
+	{
+		this->sprite()->color = RED;
+		this->position += Point2(speed * 2.5, speed * 2.5) * Point2(cos(this->rotation.z), sin(this->rotation.z)) * deltaTime;
+	}
+	else
+	{
+		this->position += Point2(speed, speed) * Point2(cos(this->rotation.z), sin(this->rotation.z)) * deltaTime;
+	}
+	float playerangle = atan2(_player->position.y - this->position.y, _player->position.x - this->position.x);
+	this->rotation.z = playerangle;
 
 
-	float playerangle = atan2(_player->position.y - this->position.y, _player->position.x - this->position.x) * 180.0 / PI;
-	this->rotation.z = playerangle * PI / 180;
+
+
+
 
 	//Rectangle hitbox = Rectangle(this->position.x, this->position.y, 100, 100);
 

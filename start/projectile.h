@@ -12,9 +12,11 @@ public:
 	Projectile();
 	/// @brief Destructor
 	virtual ~Projectile();
+
 	float speed;
 	float currentRotation;
-
+	bool dead;
+	int pierceEnemyCount;
 	/// @brief update is automatically called every frame
 	/// @param deltaTime the elapsed time in seconds
 	/// @return void

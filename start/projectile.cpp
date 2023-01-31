@@ -11,7 +11,9 @@ Projectile::Projectile() : Entity()
 {
 	this->addSprite("assets/bullet.tga");
 	this->sprite()->color = WHITE;
-	this->scale = Point2(2, 2);
+	this->scale = Point2(1.5, 1.5);
+	dead = false;
+	pierceEnemyCount = 0;
 	
 }
 

@@ -37,7 +37,6 @@ Scene00::Scene00() : SuperScene()
 		consolecontainer->addChild(line);
 	}
 	filltext();
-
 	layers[1]->addChild(consolecontainer);
 }
 

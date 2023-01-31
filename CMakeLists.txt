@@ -164,6 +164,11 @@ IF(MAKE_START)
 		start/projectile.h
 		start/basicentity.cpp
 		start/basicentity.h
+		start/ImageButton.cpp
+		start/ImageButton.h
+		start/coin.h
+		start/coin.cpp
+
 	)
 	target_link_libraries(start
 		${ALL_GRAPHICS_LIBS}

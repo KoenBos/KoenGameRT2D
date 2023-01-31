@@ -1,26 +1,21 @@
 
-#ifndef ENEMY_H
-#define ENEMY_H
+#ifndef COIN_H
+#define COIN_H
 
 #include <rt2d/entity.h>
 #include "player.h"
 
  /// @brief The MyEntity class is the Entity implementation.
-class Enemy : public Entity
+class Coin : public Entity
 {
 public:
 	/// @brief Constructor
-	Enemy(Player* player);
+	Coin(Player* player);
+	bool followplayer;
+	float followspeed;
 	/// @brief Destructor
-	virtual ~Enemy();
-	float speed;
-	float currentRotation;
-	float health;
-	bool canBeHit;
-	float lastHitTime;
-	float currentwave;
-	bool better;
-	bool speedup;
+	virtual ~Coin();
+
 
 	/// @brief update is automatically called every frame
 	/// @param deltaTime the elapsed time in seconds
@@ -31,6 +26,7 @@ private:
 	/* add your private declarations */
 
 	Player* _player;
+
 };
 
 #endif /* MYENTITY_H */
